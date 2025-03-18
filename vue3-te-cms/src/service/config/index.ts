@@ -5,7 +5,7 @@ if (import.meta.env.DEV) {
   BASE_URL = 'http://codercba.com:8000'
 } else {
   // 生产
-  BASE_URL = 'http://codercba-pro.com:8000'
+  BASE_URL = 'http://152.136.185.210:5000'
 }
 
 export { BASE_URL }

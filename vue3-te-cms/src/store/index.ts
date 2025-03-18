@@ -1,5 +1,3 @@
-import { createPrinter } from 'typescript'
-
-const pinia = createPrinter()
-
+import { createPinia } from 'pinia'
+const pinia = createPinia()
 export default pinia

@@ -5,6 +5,8 @@
       lable-with="60px"
       size="large"
       :rules="accountRules"
+      status-icon
+      ref="formRef"
     >
       <el-form-item label="帐号" prop="name">
         <el-input v-model="account.name" />
@@ -18,11 +20,13 @@
 </template>
 
 <script setup lang="ts">
-import type { FormRules } from 'element-plus'
-import { reactive } from 'vue'
+import { type FormRules, type FormInstance, ElMessage } from 'element-plus'
+import { reactive, ref } from 'vue'
+import useLoginStore from '@/store/login/login'
+import type { IAccount } from '@/types'
 
 // 定义account数据
-const account = reactive({
+const account = reactive<IAccount>({
   name: '',
   password: ''
 })
@@ -38,7 +42,7 @@ const accountRules = reactive<FormRules>({
     {
       pattern: /^[a-z0-9]{6,20}$/,
       message: '必须是6~20数字或字母组成',
-      trigger: 'change'
+      trigger: 'blur'
     }
   ],
   password: [
@@ -50,9 +54,35 @@ const accountRules = reactive<FormRules>({
     {
       pattern: /^[a-z0-9]{3,}$/,
       message: '必须是3位以上数字或字母组成',
-      trigger: 'change'
+      trigger: 'blur'
     }
   ]
+})
+
+const formRef = ref<FormInstance>()
+
+// 执行帐号登录逻辑
+function loginAction() {
+  const loginStore = useLoginStore()
+  formRef.value?.validate((valid) => {
+    if (valid) {
+      // 1. 获取用户输入的帐号和密码
+      const name = account.name
+      const password = account.password
+
+      // 2.发起网络请求进行登录
+      loginStore.loginAccountAction({ name, password })
+    } else {
+      ElMessage({
+        message: '请输入正确的帐号或密码格式~',
+        type: 'warning'
+      })
+    }
+  })
+}
+
+defineExpose({
+  loginAction
 })
 </script>
 
