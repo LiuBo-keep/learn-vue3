@@ -24,11 +24,15 @@ import { type FormRules, type FormInstance, ElMessage } from 'element-plus'
 import { reactive, ref } from 'vue'
 import useLoginStore from '@/store/login/login'
 import type { IAccount } from '@/types'
+import { localCache } from '@/utils/cache'
+
+const CACHE_NAME = 'name'
+const CACHE_PASSWORD = 'password'
 
 // 定义account数据
 const account = reactive<IAccount>({
-  name: '',
-  password: ''
+  name: localCache.getCache(CACHE_NAME) ?? '',
+  password: localCache.getCache(CACHE_PASSWORD) ?? ''
 })
 
 // 定义校验规则
@@ -62,7 +66,7 @@ const accountRules = reactive<FormRules>({
 const formRef = ref<FormInstance>()
 
 // 执行帐号登录逻辑
-function loginAction() {
+function loginAction(isRemPwd: boolean) {
   const loginStore = useLoginStore()
   formRef.value?.validate((valid) => {
     if (valid) {
@@ -71,7 +75,15 @@ function loginAction() {
       const password = account.password
 
       // 2.发起网络请求进行登录
-      loginStore.loginAccountAction({ name, password })
+      loginStore.loginAccountAction({ name, password }).then((res) => {
+        if (isRemPwd) {
+          localCache.setCache(CACHE_NAME, name)
+          localCache.setCache(CACHE_PASSWORD, password)
+        } else {
+          localCache.removeCache(CACHE_NAME)
+          localCache.removeCache(CACHE_PASSWORD)
+        }
+      })
     } else {
       ElMessage({
         message: '请输入正确的帐号或密码格式~',
