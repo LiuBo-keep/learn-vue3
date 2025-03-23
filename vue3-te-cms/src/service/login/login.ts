@@ -3,7 +3,7 @@ import hyRequest from '..'
 
 export function accountLoginRequest(account: IAccount) {
   return hyRequest.post({
-    url: '/login',
+    url: '/user-auth/login',
     data: account
   })
 }

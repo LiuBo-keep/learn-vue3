@@ -6,7 +6,6 @@ class HYRequest {
 
   constructor(config: HYRequestConfig) {
     this.instance = axios.create(config)
-
     this.instance.interceptors.request.use(
       (config) => {
         console.log('全局请求成功的拦截')
