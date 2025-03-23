@@ -80,8 +80,11 @@ function handleLoginBtnClick() {
 
 <style lang="less" scoped>
 .login-panel {
-  width: 330px;
+  width: 380px;
   margin-bottom: 150px;
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
 
   .title {
     text-align: center;
