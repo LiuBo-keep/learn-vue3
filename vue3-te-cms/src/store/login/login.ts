@@ -4,7 +4,8 @@ import { accountLoginRequest } from '@/service/login/login'
 import { localCache } from '@/utils/cache'
 import router from '@/router'
 import { LOGIN_TOKEN, LOGIN_TYPE } from '@/global/constants'
-
+import ResponseCode from '@/global/response'
+import { type FormInstance, ElMessage } from 'element-plus'
 const useLoginStore = defineStore('login', {
   state: () => ({
     type: localCache.getCache(LOGIN_TOKEN) ?? '',
@@ -14,17 +15,19 @@ const useLoginStore = defineStore('login', {
   actions: {
     // 登录操作
     async loginAccountAction(account: IAccount) {
-      // const loginResult = await accountLoginRequest(account)
-      // console.log('loginResult =' + loginResult)
+      const loginResult = await accountLoginRequest(account)
 
-      this.type = 'Brear'
-      this.token = 'dadadadad'
-
-      localCache.setCache(LOGIN_TOKEN, this.token)
-      localCache.setCache(LOGIN_TYPE, this.type)
-
-      // 跳转main页面
-      router.push('/main')
+      if (ResponseCode.SUCCESS != loginResult?.code) {
+        ElMessage({
+          message: loginResult?.msg,
+          type: 'warning'
+        })
+      } else {
+        localCache.setCache(LOGIN_TOKEN, loginResult?.data.token)
+        localCache.setCache(LOGIN_TYPE, loginResult?.data.type)
+        // 跳转main页面
+        router.push('/main')
+      }
     }
   }
 })

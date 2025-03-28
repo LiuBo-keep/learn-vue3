@@ -14,8 +14,8 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/': {
-        target: '',
+      '/vue3': {
+        target: 'http://192.168.1.2:8081/',
         changeOrigin: true,
         secure: false
       }
