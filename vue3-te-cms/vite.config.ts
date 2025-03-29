@@ -11,5 +11,14 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  server: {
+    proxy: {
+      '/vue3': {
+        target: 'http://192.168.1.2:8081/',
+        changeOrigin: true,
+        secure: false
+      }
+    }
   }
 })

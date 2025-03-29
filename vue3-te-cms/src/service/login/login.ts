@@ -3,7 +3,7 @@ import hyRequest from '..'
 
 export function accountLoginRequest(account: IAccount) {
   return hyRequest.post({
-    url: '/user-auth/login',
+    url: '/vue3/auth/token',
     data: account
   })
 }

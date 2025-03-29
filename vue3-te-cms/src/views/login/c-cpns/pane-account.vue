@@ -44,7 +44,7 @@ const accountRules = reactive<FormRules>({
       trigger: 'blur'
     },
     {
-      pattern: /^[a-z0-9]{6,20}$/,
+      pattern: /^[a-z0-9]{3,20}$/,
       message: '必须是6~20数字或字母组成',
       trigger: 'blur'
     }
