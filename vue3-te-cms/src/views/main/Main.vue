@@ -5,7 +5,10 @@
         <mainMenu />
       </el-aside>
       <el-container>
-        <el-header height="50px">Header</el-header>
+        <el-header height="50px">
+          <span>Header</span>
+          <span><button @click="handleExitClick">登出</button></span>
+        </el-header>
         <el-main> Main </el-main>
       </el-container>
     </el-container>

@@ -2,7 +2,7 @@
   <div class="main-menu">
     <div class="logo">
       <img class="img" src="../../assets/img/logo.svg" alt="" />
-      <h2 class="title">{{ title }}</h2>
+      <h2 class="title">{{ systemTilie }}</h2>
     </div>
     <div class="menu">
       <el-menu
@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts" setup>
-const title = import.meta.env.VITE_MAIN_MENU_TITLE
+const systemTilie = import.meta.env.VITE_SYSTEM_TITLE
 </script>
 
 <style scoped lang="less">

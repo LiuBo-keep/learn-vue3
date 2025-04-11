@@ -1,7 +1,7 @@
 <template>
   <div class="login-panel">
     <!-- 顶部区域 -->
-    <h1 class="title">后台管理系统</h1>
+    <h1 class="title">{{ systemTilie }}</h1>
 
     <!-- 中间的tabls切换 -->
     <div class="tabls">
@@ -52,6 +52,8 @@ import paneAccount from './pane-account.vue'
 import panePhone from './pane-phone.vue'
 import type PaneAccount from './pane-account.vue'
 import { localCache } from '@/utils/cache'
+
+const systemTilie = import.meta.env.VITE_SYSTEM_TITLE
 
 // 是否记住密码
 const isRemPwd = ref<boolean>(localCache.getCache('isRemPwd') ?? false)
