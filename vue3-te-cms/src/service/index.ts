@@ -1,10 +1,11 @@
-import { TIME_OUT } from './config'
+import { TIME_OUT, HEADERS } from './config'
 import HYRequest from './request'
 
 const hyRequest = new HYRequest({
   baseURL: '',
   timeout: TIME_OUT,
-  withCredentials: true
+  withCredentials: true,
+  headers: HEADERS
 })
 
 export default hyRequest
