@@ -1,5 +1,5 @@
 export interface IAccount {
-  grantType: string
+  grantType?: string
   name: string
   password: string
 }
