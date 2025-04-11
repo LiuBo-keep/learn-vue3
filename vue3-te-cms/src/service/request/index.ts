@@ -1,7 +1,5 @@
 import axios, { type AxiosInstance } from 'axios'
 import type { HYRequestConfig } from './type'
-import { localCache } from '@/utils/cache'
-import { LOGIN_TOKEN, LOGIN_TYPE } from '@/global/constants'
 
 class HYRequest {
   instance: AxiosInstance
@@ -11,14 +9,6 @@ class HYRequest {
     this.instance.interceptors.request.use(
       (config) => {
         console.log('全局请求成功的拦截')
-        if (config.url != '/vue3/auth/token') {
-          // 设置请求header
-          if (localCache.getCache(LOGIN_TOKEN)) {
-            const tokenType = localCache.getCache(LOGIN_TYPE)
-            const token = localCache.getCache(LOGIN_TOKEN)
-            config.headers['Authorization'] = tokenType + ' ' + token
-          }
-        }
         return config
       },
       (err) => {
