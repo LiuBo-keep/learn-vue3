@@ -73,17 +73,20 @@ function loginAction(isRemPwd: boolean) {
       // 1. 获取用户输入的帐号和密码
       const name = account.name
       const password = account.password
+      const grantType = 'password'
 
       // 2.发起网络请求进行登录
-      loginStore.loginAccountAction({ name, password }).then((res) => {
-        if (isRemPwd) {
-          localCache.setCache(CACHE_NAME, name)
-          localCache.setCache(CACHE_PASSWORD, password)
-        } else {
-          localCache.removeCache(CACHE_NAME)
-          localCache.removeCache(CACHE_PASSWORD)
-        }
-      })
+      loginStore
+        .loginAccountAction({ grantType, name, password })
+        .then((res) => {
+          if (isRemPwd) {
+            localCache.setCache(CACHE_NAME, name)
+            localCache.setCache(CACHE_PASSWORD, password)
+          } else {
+            localCache.removeCache(CACHE_NAME)
+            localCache.removeCache(CACHE_PASSWORD)
+          }
+        })
     } else {
       ElMessage({
         message: '请输入正确的帐号或密码格式~',
