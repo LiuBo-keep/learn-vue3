@@ -2,58 +2,91 @@
   <div class="main-menu">
     <div class="logo">
       <img class="img" src="../../assets/img/logo.svg" alt="" />
-      <h2 class="title">{{ systemTilie }}</h2>
+      <h2 v-show="!isCollapse" class="title">{{ systemTilie }}</h2>
     </div>
     <div class="menu">
       <el-menu
-        default-active="activeMenu"
-        background-color="#304156"
-        text-color="#bfcbd9"
-        unique-opened="false"
-        active-text-color="#409EFF"
+        default-active="1"
+        :collapse="isCollapse"
+        background-color="#001529"
+        text-color="#b7bdc3"
+        active-text-color="#fff"
       >
-        <el-sub-menu index="1">
+        <el-menu-item index="1">
+          <el-icon><House /></el-icon>
+          <span>首页</span>
+        </el-menu-item>
+        <el-menu-item index="2" v-if="showAdminMenu">
+          <el-icon><User /></el-icon>
+          <span>人员管理</span>
+        </el-menu-item>
+
+        <el-menu-item index="3" v-if="showAdminMenu">
+          <el-icon><Tickets /></el-icon>
+          <span>分类管理</span>
+        </el-menu-item>
+
+        <el-menu-item index="4" v-if="showAdminMenu">
+          <el-icon><Goods /></el-icon>
+          <span>产品管理</span>
+        </el-menu-item>
+
+        <el-menu-item index="5" v-if="showAdminMenu">
+          <el-icon><Memo /></el-icon>
+          <span>订单管理</span>
+        </el-menu-item>
+
+        <el-sub-menu index="6" v-if="showAdminMenu">
           <template #title>
-            <el-icon><location /></el-icon>
-            <span>Navigator One</span>
+            <el-icon><Tools /></el-icon>
+            <span>系统设置</span>
           </template>
-          <el-menu-item-group title="Group One">
-            <el-menu-item index="1-1">item one</el-menu-item>
-            <el-menu-item index="1-2">item two</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="Group Two">
-            <el-menu-item index="1-3">item three</el-menu-item>
-          </el-menu-item-group>
-          <el-sub-menu index="1-4">
-            <template #title>item four</template>
-            <el-menu-item index="1-4-1">item one</el-menu-item>
-          </el-sub-menu>
+          <el-menu-item index="6-1">
+            <el-icon><Folder /></el-icon>
+            <span>文件存储设置</span>
+          </el-menu-item>
+          <el-menu-item index="6-2">
+            <el-icon><ChatLineSquare /></el-icon>
+            <span>短信设置</span>
+          </el-menu-item>
         </el-sub-menu>
-        <el-menu-item index="2">
-          <el-icon><icon-menu /></el-icon>
-          <span>Navigator Two</span>
-        </el-menu-item>
-        <el-menu-item index="3" disabled>
-          <el-icon><document /></el-icon>
-          <span>Navigator Three</span>
-        </el-menu-item>
-        <el-menu-item index="4">
-          <el-icon><setting /></el-icon>
-          <span>Navigator Four</span>
-        </el-menu-item>
       </el-menu>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import useLoginStore from '@/store/login/login'
+import { computed } from 'vue'
+
+// 定义props
+defineProps({
+  isCollapse: {
+    type: Boolean,
+    default: false
+  }
+})
+
+// 从环境变量中获取标题
 const systemTilie = import.meta.env.VITE_SYSTEM_TITLE
+
+// 获取当前登录用户信息
+const loginStore = useLoginStore()
+const userInfo = loginStore.userInfo
+
+// 获取用户类型
+const userType = userInfo?.userType
+
+// 计算判断是否是管理员展示菜单
+const showAdminMenu = computed(() => {
+  return userType == 'administrator'
+})
 </script>
 
 <style scoped lang="less">
 .main-menu {
   height: 100%;
-  background-color: #304156;
+  background-color: #001529;
 }
 
 .logo {
@@ -75,6 +108,25 @@ const systemTilie = import.meta.env.VITE_SYSTEM_TITLE
     font-weight: 700;
     color: white;
     white-space: nowrap;
+  }
+}
+
+.el-menu {
+  border-right: none;
+  user-select: none;
+}
+
+.el-sub-menu {
+  .el-menu-item {
+    padding-left: 50px !important;
+    background-color: #304156;
+  }
+  .el-menu-item:hover {
+    color: #fff;
+  }
+
+  .el-menu-item.is-active {
+    background-color: #0a60bd;
   }
 }
 </style>

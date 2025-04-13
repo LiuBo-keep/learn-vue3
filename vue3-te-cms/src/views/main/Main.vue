@@ -1,13 +1,12 @@
 <template>
   <div class="main">
     <el-container class="main-content">
-      <el-aside width="210px">
-        <mainMenu />
+      <el-aside :width="isCollapse ? '50px' : '210px'">
+        <MainMenu :is-collapse="isCollapse" />
       </el-aside>
       <el-container>
         <el-header height="50px">
-          <span>Header</span>
-          <span><button @click="handleExitClick">登出</button></span>
+          <MainHeader @fold-change="handleFoldChange" />
         </el-header>
         <el-main> Main </el-main>
       </el-container>
@@ -23,7 +22,15 @@ import {
 } from '@/global/constants'
 import router from '@/router'
 import { localCache } from '@/utils/cache'
-import mainMenu from '@/components/main-menu/main-menu.vue'
+import MainMenu from '@/components/main-menu/main-menu.vue'
+import MainHeader from '@/components/mian-header/main-header.vue'
+import { ref } from 'vue'
+
+// 处理main-header折叠变化
+const isCollapse = ref(false)
+function handleFoldChange(flag: boolean) {
+  isCollapse.value = flag
+}
 
 // 退出登录
 function handleExitClick() {
@@ -44,11 +51,19 @@ function handleExitClick() {
 .main-content {
   height: 100%;
   .el-aside {
-    background-color: palegoldenrod;
-  }
+    overflow-x: hidden;
+    overflow-y: auto;
+    line-height: 200px;
+    text-align: left;
+    cursor: pointer;
+    background-color: #001529;
+    transition: width 0.3s linear;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 
-  .el-header {
-    background-color: skyblue;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .el-main {

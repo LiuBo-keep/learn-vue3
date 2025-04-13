@@ -14,7 +14,8 @@ import { findCurrentLoginUser } from '@/service/user/user'
 const useLoginStore = defineStore('login', {
   state: () => ({
     type: localCache.getCache(LOGIN_TOKEN) ?? '',
-    token: localCache.getCache(LOGIN_TYPE) ?? ''
+    token: localCache.getCache(LOGIN_TYPE) ?? '',
+    userInfo: localCache.getCache(CURRENT_LOGIN_USER_INFO) ?? {}
   }),
 
   actions: {
