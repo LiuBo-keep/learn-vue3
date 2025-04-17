@@ -1,15 +1,35 @@
 <template>
   <div class="header-info">
+    <!-- 操作小图标 -->
     <div class="operation">
       <span>
         <el-icon><Message /></el-icon>
       </span>
       <span>
+        <span class="dot"></span>
         <el-icon><ChatDotRound /></el-icon>
       </span>
       <span>
         <el-icon><Search /></el-icon>
       </span>
+    </div>
+    <!-- 个人信息 -->
+    <div class="info">
+      <el-dropdown>
+        <span class="el-dropdown-link">
+          <el-avatar :size="30" :src="circleUrl" />
+          <span>aidan</span>
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item>Action 1</el-dropdown-item>
+            <el-dropdown-item>Action 2</el-dropdown-item>
+            <el-dropdown-item>Action 3</el-dropdown-item>
+            <el-dropdown-item disabled>Action 4</el-dropdown-item>
+            <el-dropdown-item divided>Action 5</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
   </div>
 </template>
@@ -18,9 +38,9 @@
 
 <style lang="less" scoped>
 .header-info {
-  color: red;
+  display: flex;
+  align-items: center;
 }
-
 .operation {
   display: inline-flex;
   margin-right: 20px;
@@ -38,6 +58,17 @@
 
     i {
       font-size: 20px;
+    }
+
+    .dot {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      z-index: 10;
+      width: 6px;
+      height: 6px;
+      background: red;
+      border-radius: 100%;
     }
   }
 }
