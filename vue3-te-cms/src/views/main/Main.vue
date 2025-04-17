@@ -49,7 +49,7 @@ function handleFoldChange(flag: boolean) {
   }
 
   .el-main {
-    background-color: salmon;
+    background-color: wheat;
   }
 }
 </style>
